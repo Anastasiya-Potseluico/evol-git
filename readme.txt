@@ -1,6 +1,6 @@
 Correct writing question
 -------------------------------------------
-
+Изменения делала Поцелуйко А.С.
 Authors:
 1. Idea, string analysis method, general architecture, hints implementation - Oleg Sychev
 2. Question type code, sequence analyzer, picture generation - Dmitry Mamontov
