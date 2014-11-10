@@ -87,22 +87,20 @@ class qtype_correctwriting_lexer_pattern {
         $this->activecondition = $activecondition;
         $this->nextcondition = $nextcondition;
         $this->actions = $actions;
-
-        // TODO: check and add /^( )/ to regexp
     }
 
     /**
      * Parse pattern action string.
      */
     public function parse_actions() {
-        // TODO: parse action string
+        
     }
 
     /**
      * This function gets actionstring and "execute" it.
      */
     public function execute_actions() {
-        // TODO: eval action string
+        
     }
 
     public function name() {
