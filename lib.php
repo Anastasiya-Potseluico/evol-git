@@ -86,12 +86,10 @@ class qtype_correctwriting_preserving_serializator {
     public function __construct($oldvalues, $newvalues, $s, $storage = null) {
         $oldvalueskeys = array_keys($oldvalues);
         $this->oldvalues = $oldvalues;
-        if (count($oldvalueskeys)) {
-            if (is_object($oldvalues[$oldvalueskeys[0]])) {
-                $this->oldvalues = array();
-                foreach ($oldvalues as $key => $object) {
-                    $this->oldvalues[$key] = $object->id;
-                }
+        if (count($oldvalueskeys) && is_object($oldvalues[$oldvalueskeys[0]])) {
+            $this->oldvalues = array();
+            foreach ($oldvalues as $key => $object) {
+                $this->oldvalues[$key] = $object->id;
             }
         }
         $this->newvalues = $newvalues;
