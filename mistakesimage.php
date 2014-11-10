@@ -714,39 +714,35 @@ class qtype_correctwriting_arrow_builder {
        // Set thickness
        imagesetthickness($im, LINE_WIDTH);
        // Draw absent lexemes arrows
-       if (count($this->table->mistakes()->get_absent_lexeme_indexes()) != 0) {
-           if ($groupmovements) {
-               $groups = array();
-               $indexes = $this->table->mistakes()->get_absent_lexeme_indexes();
-               foreach($indexes as $index) {
-                    if (count($groups) == 0) {
-                        $groups[] = array( $index );
+       if (count($this->table->mistakes()->get_absent_lexeme_indexes()) != 0 && $groupmovements) {
+           $groups = array();
+           $indexes = $this->table->mistakes()->get_absent_lexeme_indexes();
+           foreach($indexes as $index) {
+                if (count($groups) == 0) {
+                    $groups[] = array( $index );
+                } else {
+                    $lastgroup = $groups[count($groups) - 1];
+                    $lastindex = $lastgroup[count($lastgroup) - 1];
+                    if ($index == $lastindex + 1) {
+                        $groups[count($groups) - 1][] = $index;
                     } else {
-                        $lastgroup = $groups[count($groups) - 1];
-                        $lastindex = $lastgroup[count($lastgroup) - 1];
-                        if ($index == $lastindex + 1) {
-                            $groups[count($groups) - 1][] = $index;
-                        } else {
-                            $groups[] = array( $index );
-                        }
+                        $groups[] = array( $index );
                     }
-               }
-
-               foreach($groups as $group) {
-                   $rects = array();
-                   foreach($group as $index) {
-                       $rect = $this->table->get_rect_by_answer_index($index);
-                       $rects[] = $rect;
-                   }
-                   $rect = $this->merge_rects($rects);
-                   $this->draw_rectangle($im, $palette['red'], $rect);
-               }
-
-           } else {
-               foreach($this->table->mistakes()->get_absent_lexeme_indexes() as $index) {
+                }
+           }
+           foreach($groups as $group) {
+               $rects = array();
+               foreach($group as $index) {
                    $rect = $this->table->get_rect_by_answer_index($index);
-                   $this->draw_rectangle($im, $palette['red'], $rect);
+                   $rects[] = $rect;
                }
+               $rect = $this->merge_rects($rects);
+               $this->draw_rectangle($im, $palette['red'], $rect);
+           }
+       } else {
+           foreach($this->table->mistakes()->get_absent_lexeme_indexes() as $index) {
+               $rect = $this->table->get_rect_by_answer_index($index);
+               $this->draw_rectangle($im, $palette['red'], $rect);
            }
        }
        imagesetthickness($im, STRIKETHROUGH_LINE_WIDTH);
